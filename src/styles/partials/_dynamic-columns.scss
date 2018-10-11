@@ -1,0 +1,88 @@
+$componentMaxWidth: 980px;
+$margin: 10px;
+
+.dynamic-columns{
+  width: 100%;
+  max-width:$componentMaxWidth;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start ;
+
+  &__column{
+    height: 200px;
+    margin: 10px;
+    width: 100%;
+    background-color: greenyellow;
+
+    // One Column style
+    &:first-of-type:nth-last-of-type(1),
+    &:first-of-type:nth-last-of-type(1) ~ & {
+      background-color: grey;
+      @include bp-xs{
+        width: calc(100% - (2 * #{$margin}));
+      }
+    }
+
+    // Two Column style
+    &:first-of-type:nth-last-of-type(2),
+    &:first-of-type:nth-last-of-type(2) ~ & {
+      background-color: red;
+    }
+
+    // Three Column style
+    &:first-of-type:nth-last-of-type(3),
+    &:first-of-type:nth-last-of-type(3) ~ & {
+      background-color: yellow;
+    }
+
+    // Four Column style
+    &:first-of-type:nth-last-of-type(4),
+    &:first-of-type:nth-last-of-type(4) ~ & {
+      background-color: greenyellow;
+    }
+
+    // Five Column style
+    &:first-of-type:nth-last-of-type(5),
+    &:first-of-type:nth-last-of-type(5) ~ & {
+      background-color: grey;
+    }
+
+    // Six Column style
+    &:first-of-type:nth-last-of-type(6),
+    &:first-of-type:nth-last-of-type(6) ~ & {
+      background-color: greenyellow;
+    }
+
+    // Seven Column style
+    &:first-of-type:nth-last-of-type(7),
+    &:first-of-type:nth-last-of-type(7) ~ & {
+      background-color: blueviolet;
+    }
+
+    // Eight Column style
+    &:first-of-type:nth-last-of-type(8),
+    &:first-of-type:nth-last-of-type(8) ~ & {
+      background-color: yellowgreen;
+    }
+
+    @include bp-xs{
+      margin: 10px;
+      width: calc(50% - ( 2 * #{$margin}));
+    }
+
+    @include bp-sm{
+      @for $i from 2 through 9 {
+        $index: $i;
+        @if($index >= 4){
+          $index: 4
+        }
+        &:first-of-type:nth-last-of-type(#{$i}),
+        &:first-of-type:nth-last-of-type(#{$i}) ~ & {
+          width: calc((100% / #{$index}) - ( 2 * #{$margin}));
+        }
+      }
+    }
+  }
+}
+
