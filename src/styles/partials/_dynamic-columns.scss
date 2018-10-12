@@ -1,24 +1,109 @@
 $componentMaxWidth: 980px;
 $margin: 10px;
 
+.dynamic-columns__wrapper{
+  width: 100%;
+  background-color: grey;
+  margin: 20px 0;
+  padding: 20px 0;
+}
+
 .dynamic-columns{
   width: 100%;
   max-width:$componentMaxWidth;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start ;
+  justify-content: flex-start;
 
   &__column{
-    height: 200px;
+    display: flex;
+    height: auto;
     margin: 10px;
     width: 100%;
-    background-color: greenyellow;
+    background-color: #fff;
+    flex-wrap: wrap;
+
+    &-image-wrapper:empty{
+      width: 0;
+      padding: 0;
+      margin: 0;
+      flex:0;
+      height: 20px;
+    }
+    &-image-wrapper{
+      position: relative;
+      height: 170px;
+      margin: 20px;
+      flex: 1;
+
+      @include bp-sm {
+        max-width: 464px;
+        width: 50%;
+        align-self: center;
+      }
+
+      .image-border{
+        height: 8px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #511e62;;
+      }
+
+      .dynamic-columns__column--image{
+        width: 100%;
+        height: 100%;
+        background: url(../img/hotel-image.png)no-repeat center center;
+        background-size: cover;
+        @include bp-sm {
+          max-width: 464px;
+        }
+      }
+    }
+
+    //Content
+    &--content{
+      margin: 0 20px 20px 20px;
+      .column__content__header{
+        display: flex;
+        .hotel__logo{
+          height: 32px;
+          width: 32px;
+          //display: flex;
+          img{
+            height: 100%;
+            width: auto;
+          }
+        }
+        h4{
+          margin-left: 10px;
+        }
+      }
+
+      @include bp-sm {
+        margin: 20px;
+        flex: 1;
+      }
+
+      a{
+        color: #511e62;
+      }
+
+      button{
+        max-width: 285px;
+        width: 100%;
+        height: 40px;
+        border-radius: 3px;
+        background-color: #f9c940;
+        border: none;
+      }
+    }
 
     // One Column style
     &:first-of-type:nth-last-of-type(1),
     &:first-of-type:nth-last-of-type(1) ~ & {
-      background-color: grey;
       @include bp-xs{
         width: calc(100% - (2 * #{$margin}));
       }
@@ -26,57 +111,61 @@ $margin: 10px;
 
     // Two Column style
     &:first-of-type:nth-last-of-type(2),
-    &:first-of-type:nth-last-of-type(2) ~ & {
-      background-color: red;
-    }
-
-    // Three Column style
+    &:first-of-type:nth-last-of-type(2) ~ &,
     &:first-of-type:nth-last-of-type(3),
-    &:first-of-type:nth-last-of-type(3) ~ & {
-      background-color: yellow;
-    }
+    &:first-of-type:nth-last-of-type(3) ~ &  {
 
-    // Four Column style
-    &:first-of-type:nth-last-of-type(4),
-    &:first-of-type:nth-last-of-type(4) ~ & {
-      background-color: greenyellow;
-    }
+      .dynamic-columns__column-image-wrapper:empty{
+        width: 0;
+        padding: 0;
+        margin: 0;
+        flex:0;
+        height: 20px;
+      }
+      .dynamic-columns__column-image-wrapper{
+        position: relative;
+        height: 170px;
+        margin: 20px;
+        flex: 1;
 
-    // Five Column style
-    &:first-of-type:nth-last-of-type(5),
-    &:first-of-type:nth-last-of-type(5) ~ & {
-      background-color: grey;
-    }
-
-    // Six Column style
-    &:first-of-type:nth-last-of-type(6),
-    &:first-of-type:nth-last-of-type(6) ~ & {
-      background-color: greenyellow;
-    }
-
-    // Seven Column style
-    &:first-of-type:nth-last-of-type(7),
-    &:first-of-type:nth-last-of-type(7) ~ & {
-      background-color: blueviolet;
-    }
-
-    // Eight Column style
-    &:first-of-type:nth-last-of-type(8),
-    &:first-of-type:nth-last-of-type(8) ~ & {
-      background-color: yellowgreen;
+        @include bp-sm {
+          max-width: 464px;
+          width: 50%;
+          align-self: center;
+        }
+      }
+      @include bp-xs {
+        .dynamic-columns__column-image-wrapper{
+          flex:1;
+        }
+        .dynamic-columns__column--content {
+          margin: 20px;
+          flex:1;
+        }
+      }
+      @include bp-sm {
+        flex-direction: column;
+        .dynamic-columns__column-image-wrapper {
+          max-width: calc(100% - (2 * #{$margin}));
+          width: calc(100% - (2 * #{$margin}));
+          flex: 1;
+        }
+        .dynamic-columns__column--content {
+          max-width: 100%;
+          margin: 20px;
+        }
+      }
     }
 
     @include bp-xs{
       margin: 10px;
-      width: calc(50% - ( 2 * #{$margin}));
+      //width: calc(50% - ( 2 * #{$margin}));
     }
 
     @include bp-sm{
-      @for $i from 2 through 9 {
+      @for $i from 2 through 8{
         $index: $i;
-        @if($index >= 4){
-          $index: 4
-        }
+        @if($index >= 3){ $index: 3}
         &:first-of-type:nth-last-of-type(#{$i}),
         &:first-of-type:nth-last-of-type(#{$i}) ~ & {
           width: calc((100% / #{$index}) - ( 2 * #{$margin}));
@@ -86,3 +175,49 @@ $margin: 10px;
   }
 }
 
+
+// Internet Explorer specific Style
+.ie{
+  .dynamic-columns{
+    width: 100%;
+    max-width:$componentMaxWidth;
+    &__column{
+
+      // One Column style
+      &:first-of-type:nth-last-of-type(1),
+      &:first-of-type:nth-last-of-type(1) ~ & {
+        background-color: grey;
+        @include bp-xs{
+          width: calc(100% - (2 * #{$margin}));
+        }
+      }
+
+      // Two Column style
+      &:first-of-type:nth-last-of-type(2),
+      &:first-of-type:nth-last-of-type(2) ~ & {
+        background-color: red;
+      }
+
+      // Three Column style
+      &:first-of-type:nth-last-of-type(3),
+      &:first-of-type:nth-last-of-type(3) ~ & {
+        background-color: yellow;
+      }
+
+      @include bp-xs{
+        width: calc(50% - ( 2 * #{$margin}));
+      }
+
+      @include bp-sm{
+        @for $i from 2 through 8{
+          $index: $i;
+          @if($index >= 3){ $index: 3}
+          &:first-of-type:nth-last-of-type(#{$i}),
+          &:first-of-type:nth-last-of-type(#{$i}) ~ & {
+            width: calc((100% / #{$index}) - ( 2 * #{$margin}));
+          }
+        }
+      }
+    }
+  }
+}
